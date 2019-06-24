@@ -6,6 +6,7 @@ setwd("C:/Users/Vinny/work/sabre_methods")
 ###### load code for eSABRE and SABRE methods #######
 
 source("./eSABRE/eSABRE.R")
+source("./eSABRE/eSABRE_TryCatch.R")
 source("./Semi_Conjugate_SABRE/SC_SABRE.R")
 source("./Binary_Mask_SABRE/BM_SABRE.R")
 source("./Conjugate_SABRE/C_SABRE.R")
@@ -79,6 +80,12 @@ model_BM_conjugate_sabre<-BM_SABRE(y[,,1],as.matrix(X[,,1]),cbind(z1[,,1],z2[,,1
 # we recommend a larger number of iterations in practise
 model_esabre_1<-eSABRE(y[,,1],as.matrix(X[,,1]),list(z1[,,1],z2[,,1]),Challenge=challenge[,,1],Protective=protective[,,1],iters=1000,it_count=10)
 model_esabre_2<-eSABRE(y[,,1],as.matrix(X[,,1]),NA,Challenge=challenge[,,1],Protective=protective[,,1],iters=1000,it_count=10)
+
+#### end ####
+
+###### Evaluate the Simulated Data for the eSABRE method with Try-Catch ####
+
+model_esabre_TC<-eSABRE_TryCatch(y[,,1],as.matrix(X[,,1]),list(z1[,,1],z2[,,1]),Challenge=challenge[,,1],Protective=protective[,,1],iters=1000,it_count=10)
 
 #### end ####
 
