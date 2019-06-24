@@ -31,7 +31,7 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
                  f=round((ncol(X)-1)/10),
                  alpha_y=0.001,
                  beta_y=0.001){
-  
+  tryCatch_iteration_skips <- c()
   pi.vary=FALSE
   time.check=TRUE
   method="log-MH"
@@ -194,6 +194,7 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
         INV.SIGMA<-m$inv.sigma
       }
       else if(method=="Bern"){
+        tryCatch({
         gamma[i,1]<-gamma[i-1,1]
         samp<-sample((2:NX),(NX-1))
         gam1 <- gamma_curr
@@ -253,9 +254,22 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
         XTXg<-m$XTXg
         Xg<-m$Xg
         ySy<-m$YSY
-        INV.SIGMA<-m$inv.sigma
+        INV.SIGMA<-m$inv.sigma},
+        error = function(e){
+          gamma[i,]<-gamma[i-1,]
+          gind<-(1:NX)*gamma[i,]
+          g_ind<-gind[gind!=0]
+          m<-gamma_density(gamma[i,],pi_a,pi_b,m0,V0,mu_y[i,],X,NM,sigsq_W,XTX,alpha_e,beta_e)
+          XTXg<-m$XTXg
+          Xg<-m$Xg
+          ySy<-m$YSY
+          INV.SIGMA<-m$inv.sigma
+          tryCatch_iteration_skips <- c(tryCatch_iteration_skips,i)
+          }
+        )
       }
       else if(method=="log-MH"){
+        tryCatch({
         if(pi_prop=="pi"){
           PIP1<-pi[i]
           PIP2<-pi[i-1]
@@ -327,7 +341,19 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
         m<-gamma_density(gamma[i,],pi_a,pi_b,m0,V0,mu_y[i,],X,NM,sigsq_W,XTX,alpha_e,beta_e)
         XTXg<-m$XTXg
         Xg<-m$Xg
-        ySy<-m$YSY
+        ySy<-m$YSY},
+        error = function(e){
+          gamma[i,]<-gamma[i-1,]
+          gind<-(1:NX)*gamma[i,]
+          g_ind<-gind[gind!=0]
+          m<-gamma_density(gamma[i,],pi_a,pi_b,m0,V0,mu_y[i,],X,NM,sigsq_W,XTX,alpha_e,beta_e)
+          XTXg<-m$XTXg
+          Xg<-m$Xg
+          ySy<-m$YSY
+          INV.SIGMA<-m$inv.sigma
+          tryCatch_iteration_skips <- c(tryCatch_iteration_skips,i)
+          }
+        )
       }
       else{
         stop("Invalid method selected")
@@ -621,6 +647,7 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
           Xg<-m$Xg
           ySy<-m$YSY
           INV.SIGMA<-m$inv.sigma
+          tryCatch_iteration_skips <- c(tryCatch_iteration_skips,i)
         }
         )
       }
@@ -708,6 +735,7 @@ eSABRE_TryCatch<-function(y,X,Z,Challenge,Protective,iters,it_count=floor(iters/
             Xg<-m$Xg
             ySy<-m$YSY
             INV.SIGMA<-m$inv.sigma
+            tryCatch_iteration_skips <- c(tryCatch_iteration_skips,i)
           }
         )
       }
