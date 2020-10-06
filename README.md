@@ -21,7 +21,7 @@ Additionally, there is ongoing work looking at improving the speed and performan
 Examples 
 ---------
 
-Examples can be found in the folder ['Example'](https://github.com/vinnydavies/sabre_methods/examples)
+Examples can be found in the folder ['Examples'](https://github.com/vinnydavies/sabre_methods/examples)
 
 Publications 
 ---------
