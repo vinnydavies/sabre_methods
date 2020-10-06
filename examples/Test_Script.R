@@ -2,15 +2,16 @@
 setwd("C:/Users/Vinny/work/sabre_methods")
 
 # install any necessary packages here
+# required packages are: mvtnorm, Rlab, coda, msm, pscl, lme4, dummies, doBy, matrixStats
 
 ###### load code for eSABRE and SABRE methods #######
 
-source("./eSABRE/eSABRE.R")
-source("./eSABRE/eSABRE_TryCatch.R")
-source("./Semi_Conjugate_SABRE/SC_SABRE.R")
-source("./Binary_Mask_SABRE/BM_SABRE.R")
-source("./Conjugate_SABRE/C_SABRE.R")
-source("./biWAIC/biWAIC.R")
+source("./original_methods/eSABRE/eSABRE.R")
+source("./original_methods/eSABRE/eSABRE_TryCatch.R")
+source("./original_methods/Semi_Conjugate_SABRE/SC_SABRE.R")
+source("./original_methods/Binary_Mask_SABRE/BM_SABRE.R")
+source("./original_methods/Conjugate_SABRE/C_SABRE.R")
+source("./original_methods/biWAIC/biWAIC.R")
 
 #### end ####
 
